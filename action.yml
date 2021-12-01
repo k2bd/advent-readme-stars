@@ -39,6 +39,10 @@ inputs:
       Prefix to use for the header before the table, e.g. "##"
     required: false
     default: "##"
+  readmeLocation:
+    description: Location of the README file
+    required: false
+    default: "README.md"
 branding:
   icon: "star"
   color: "purple"

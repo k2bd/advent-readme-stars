@@ -20,6 +20,9 @@ YEAR = int(os.environ.get("INPUT_YEAR") or most_recent_advent_year())
 #: Table header prefix
 HEADER_PREFIX = os.environ.get("INPUT_HEADERPREFIX", "")
 
+#: Location of the README file
+README_LOCATION = os.environ.get("INPUT_READMELOCATION", "")
+
 #: Advent of Code base URL, for testing
 ADVENT_URL = os.environ.get("ADVENT_URL", "https://adventofcode.com")
 

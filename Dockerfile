@@ -1,22 +1,15 @@
-FROM 3.9-alpine as builder
+FROM python:3.9
 
-ENV \
-  PYTHONFAULTHANDLER=1 \
-  PYTHONUNBUFFERED=1 \
-  PYTHONHASHSEED=random \
-  PIP_NO_CACHE_DIR=off \
-  PIP_DISABLE_PIP_VERSION_CHECK=on \
-  PIP_DEFAULT_TIMEOUT=100 \
-  POETRY_VERSION=1.1.11
+ENV PYTHONFAULTHANDLER=1 \
+    PYTHONHASHSEED=random \
+    PYTHONUNBUFFERED=1
 
-RUN pip install "poetry==$POETRY_VERSION"
+RUN pip install "poetry==1.1.11"
 
-# Copy only requirements to cache them in docker layer
-WORKDIR /code
-COPY poetry.lock pyproject.toml /code/
+COPY poetry.lock pyproject.toml ./
+RUN poetry install --no-dev
 
-RUN poetry config virtualenvs.create false
+COPY . .
+RUN poetry install --no-dev
 
-RUN poetry install --no-dev --no-interaction --no-ansi
-
-CMD = ["poetry", "run", "python", "-m", "advent_readme_stars"]
+CMD ["poetry", "run", "python", "-m", "advent_readme_stars"]

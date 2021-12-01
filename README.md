@@ -2,9 +2,40 @@
 
 This project adds a stars report to your README based on your advent of code progress.
 
-## Example Action
+## Quickstart
 
-TODO
+Add this line somewhere in your README.md:
+
+```markdown
+<!--- advent_readme_stars table --->
+```
+
+Make a note of your user ID and add your session cookie to your repo as a secret called `AOC_SESSION`.
+To see how to find these values, see those sections in the spec below.
+
+Add this action to your repo as `.github/workflows/readme-stars.yml`, pasting in yout user ID instead of 1234567:
+
+```yml
+name: Update README ⭐
+on:
+  schedule:
+    - cron: "51 */4 * * *"  # Every 4 hours
+  workflow_dispatch:
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: k2bd/advent-readme-stars@v1
+        with:
+          userId: 1234567
+          sessionCookie: ${{ secrets.AOC_SESSION }}
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update README stars
+          file_pattern: README.md
+```
 
 ## Action Spec
 
@@ -49,7 +80,7 @@ The symbol that will mark completed parts in your table.
 
 Year to get results for.
 By default, it will get results for the year of the most recent advent.
-That is, last year, except this year in December.
+That is, this year if it's December, otherwise last year.
 
 ### `headerPrefix`
 
@@ -58,10 +89,16 @@ That is, last year, except this year in December.
 Prefix for the section header added before the table.
 Should be some kind of Markdown header level.
 
+### `readmeLocation`
+
+*Optional* - default `README.md`
+
+Location of the README file to edit.
+
 ## Example Table
 
 <!--- advent_readme_stars table --->
 
-# Like this project?
+## Like this project?
 
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png)](https://www.buymeacoffee.com/k2bd)
