@@ -1,5 +1,8 @@
 # Advent README Stars
 
+[![CI](https://github.com/k2bd/advent-readme-stars/actions/workflows/ci.yml/badge.svg)](https://github.com/k2bd/advent-readme-stars/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/k2bd/advent-readme-stars/branch/main/graph/badge.svg?token=J5FA3JU4OI)](https://codecov.io/gh/k2bd/advent-readme-stars)
+
 This project adds a stars report to your README based on your advent of code progress.
 
 ## Quickstart
