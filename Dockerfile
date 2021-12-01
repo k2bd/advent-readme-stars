@@ -10,6 +10,6 @@ COPY poetry.lock pyproject.toml ./
 RUN poetry install --no-dev
 
 COPY . .
-RUN poetry install --no-dev
+RUN poetry build && pip install dist/*.whl
 
-CMD ["poetry", "run", "python", "-m", "advent_readme_stars"]
+CMD ["python", "-m", "advent_readme_stars"]
