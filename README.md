@@ -3,11 +3,11 @@
 [![CI](https://github.com/k2bd/advent-readme-stars/actions/workflows/ci.yml/badge.svg)](https://github.com/k2bd/advent-readme-stars/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/k2bd/advent-readme-stars/branch/main/graph/badge.svg?token=J5FA3JU4OI)](https://codecov.io/gh/k2bd/advent-readme-stars)
 
-This [action](https://github.com/marketplace/actions/advent-readme-stars) maintains a stars report to your README based on your [Advent of Code](https://adventofcode.com/) progress.
+This [action](https://github.com/marketplace/actions/advent-readme-stars) adds and maintains a stars report in your README based on your [Advent of Code](https://adventofcode.com/) progress.
 
 ## Quickstart
 
-Add this line somewhere in your README.md:
+Add this line somewhere in your `README.md`:
 
 ```markdown
 <!--- advent_readme_stars table --->
