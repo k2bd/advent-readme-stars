@@ -1,6 +1,12 @@
 from typing import List
 
-from advent_readme_stars.constants import ADVENT_URL, HEADER_PREFIX, STAR_SYMBOL, TABLE_MARKER, YEAR
+from advent_readme_stars.constants import (
+    ADVENT_URL,
+    HEADER_PREFIX,
+    STAR_SYMBOL,
+    TABLE_MARKER,
+    YEAR,
+)
 from advent_readme_stars.progress import get_progress
 
 

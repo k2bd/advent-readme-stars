@@ -1,5 +1,7 @@
 import pytest
-from .helpers import mock_responses, EXAMPLE_DATA_3
+
+from .helpers import EXAMPLE_DATA_3, mock_responses
+
 
 @pytest.fixture
 def default_stars_response():

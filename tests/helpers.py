@@ -3,7 +3,7 @@ from contextlib import contextmanager
 from typing import Generator
 
 import responses
-from responses import RequestsMock, assert_all_requests_are_fired
+from responses import RequestsMock
 
 from advent_readme_stars.constants import STARS_ENDPOINT
 
