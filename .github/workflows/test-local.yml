@@ -1,7 +1,5 @@
 name: Update README ⭐
 on:
-  schedule:
-    - cron: "13 */4 * * *"  # Every 4 hours
   workflow_dispatch:
 
 jobs:
