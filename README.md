@@ -3,7 +3,7 @@
 [![CI](https://github.com/k2bd/advent-readme-stars/actions/workflows/ci.yml/badge.svg)](https://github.com/k2bd/advent-readme-stars/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/k2bd/advent-readme-stars/branch/main/graph/badge.svg?token=J5FA3JU4OI)](https://codecov.io/gh/k2bd/advent-readme-stars)
 
-This project adds a stars report to your README based on your advent of code progress.
+This [action](https://github.com/marketplace/actions/advent-readme-stars) maintains a stars report to your README based on your [Advent of Code](https://adventofcode.com/) progress.
 
 ## Quickstart
 
@@ -39,6 +39,8 @@ jobs:
           commit_message: Update README stars
           file_pattern: README.md
 ```
+
+If you want to adjust the cron expression, please remember to schedule your jobs such that you respect the Advent of Code request of running automated requests at a rate of no more than 1 per 15 minutes.
 
 ## Action Spec
 
