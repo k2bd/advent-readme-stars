@@ -1,0 +1,44 @@
+name: "advent-readme-stars"
+author: k2bd
+description: >
+  Automatically update a README with an up-to-date table of your advent of code
+  progress.
+runs:
+  using: docker
+  image: Dockerfile
+inputs:
+  userId:
+    description: >
+      AoC user ID. See the README for instructions on getting this.
+    required: true
+  sessionCookie:
+    description: >
+      AoC session cookie - make sure to keep this in a repo secret! See the
+      README for instructions on getting this.
+    required: true
+  tableMarker:
+    description: >
+      Unique text marking where the stars board section should go. Should be a
+      comment, i.e. <!--- text enclosed in these markers --->, which is not
+      used elsewhere in the README, and which should appear alone on its own
+      line.
+    required: false
+    default: '<!--- advent_readme_stars table --->'
+  starSymbol:
+    description: Symbol to use in the stars table
+    required: false
+    default: ⭐
+  year:
+    description: >
+      Year to post the table for. Defaults to the year of the most recent
+      December
+    required: false
+    default: ""
+  headerPrefix:
+    description: >
+      Prefix to use for the header before the table, e.g. "##"
+    required: false
+    default: "##"
+branding:
+  icon: "star"
+  color: "purple"

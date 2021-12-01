@@ -1,0 +1,24 @@
+{
+    "event": "2021",
+    "owner_id": "1511815",
+    "members": {
+        "1511815": {
+            "id": "1511815",
+            "global_score": 0,
+            "local_score": 8,
+            "stars": 2,
+            "completion_day_level": {
+                "1": {
+                    "1": {
+                        "get_star_ts": 1638343487
+                    },
+                    "2": {
+                        "get_star_ts": 1638343777
+                    }
+                }
+            },
+            "last_star_ts": 1638343777,
+            "name": "k2bd"
+        }
+    }
+}

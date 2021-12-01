@@ -6,6 +6,7 @@ authors = ["Kevin Duff <kevinkelduff@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
+requests = "^2.26.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
@@ -15,6 +16,8 @@ isort = "^5.10.1"
 flake8 = "^4.0.1"
 mypy = "^0.910"
 poethepoet = "^0.11.0"
+responses = "^0.16.0"
+types-requests = "^2.26.1"
 
 [tool.isort]
 profile = "black"
@@ -34,9 +37,16 @@ lint.sequence = [
 ]
 
 [tool.poe.tasks.test]
-sequence = [
-    {shell = "pytest -vv --cov=advent_readme_stars --cov-report term --cov-report xml"},
-]
+cmd = "pytest -vv --cov=advent_readme_stars --cov-report term --cov-report xml"
+
+[tool.poe.tasks.test.env]
+INPUT_USERID = "1511815"
+INPUT_SESSIONCOOKIE = "998877665544332211"
+INPUT_TABLEMARKER = "<!--- advent_readme_stars table --->"
+INPUT_STARSYMBOL = "⭐"
+INPUT_YEAR = "2019"
+INPUT_HEADERPREFIX = "##"
+ADVENT_URL = "http://fake.site.k2bd.dev"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

@@ -1,0 +1,89 @@
+{
+    "event": "2020",
+    "members": {
+        "1511815": {
+            "global_score": 0,
+            "local_score": 30,
+            "last_star_ts": 1638384651,
+            "completion_day_level": {
+                "6": {
+                    "2": {
+                        "get_star_ts": 1638384651
+                    },
+                    "1": {
+                        "get_star_ts": 1638383720
+                    }
+                },
+                "1": {
+                    "1": {
+                        "get_star_ts": 1637835805
+                    },
+                    "2": {
+                        "get_star_ts": 1637836072
+                    }
+                },
+                "2": {
+                    "1": {
+                        "get_star_ts": 1637842194
+                    }
+                },
+                "4": {
+                    "1": {
+                        "get_star_ts": 1638307291
+                    }
+                },
+                "3": {
+                    "2": {
+                        "get_star_ts": 1637867306
+                    },
+                    "1": {
+                        "get_star_ts": 1637867140
+                    }
+                },
+                "5": {
+                    "1": {
+                        "get_star_ts": 1638311199
+                    },
+                    "2": {
+                        "get_star_ts": 1638311534
+                    }
+                }
+            },
+            "stars": 12,
+            "id": "1511815",
+            "name": "k2bd"
+        },
+        "1511816": {
+            "global_score": 0,
+            "local_score": 30,
+            "last_star_ts": 1638384651,
+            "completion_day_level": {
+                "1": {
+                    "1": {
+                        "get_star_ts": 1637835805
+                    },
+                    "2": {
+                        "get_star_ts": 1637836072
+                    }
+                },
+                "2": {
+                    "1": {
+                        "get_star_ts": 1637842194
+                    }
+                },
+                "3": {
+                    "2": {
+                        "get_star_ts": 1637867306
+                    },
+                    "1": {
+                        "get_star_ts": 1637867140
+                    }
+                }
+            },
+            "stars": 12,
+            "id": "1511816",
+            "name": "someoneElse"
+        }
+    },
+    "owner_id": "1511815"
+}
