@@ -27,7 +27,7 @@ Add this line somewhere in your `README.md`:
 Make a note of your user ID and add your session cookie to your repo as a secret called `AOC_SESSION`.
 To see how to find these values, see those sections in the spec below.
 
-Add this action to your repo as `.github/workflows/readme-stars.yml`, pasting in your user ID instead of 1234567:
+Add this action to your repo as `.github/workflows/readme-stars.yml`, pasting in your user ID and the leaderboard ID to pull data from (or remove this argument to default to your own private leaderboard):
 
 ```yml
 name: Update README ⭐

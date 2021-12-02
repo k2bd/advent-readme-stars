@@ -5,11 +5,11 @@ from advent_readme_stars.advent import most_recent_advent_year
 #: Advent of Code user ID
 USER_ID = os.environ.get("INPUT_USERID", "")
 
-#: Advent of Code private leaderboard ID
-LEADERBOARD_ID = os.environ.get("INPUT_LEADERBOARDID", USER_ID)
-
 #: Advent of Code session cookie
 SESSION_COOKIE = os.environ.get("INPUT_SESSIONCOOKIE", "")
+
+#: Advent of Code private leaderboard ID
+LEADERBOARD_ID = os.environ.get("INPUT_LEADERBOARDID", "") or USER_ID
 
 #: Marker in the README to find
 TABLE_MARKER = os.environ.get("INPUT_TABLEMARKER", "")

@@ -7,10 +7,6 @@ runs:
   using: docker
   image: Dockerfile
 inputs:
-  leaderboardId:
-    description: >
-      AoC leaderboard ID. See the README for instructions on getting this.
-    required: false
   userId:
     description: >
       AoC user ID. See the README for instructions on getting this.
@@ -20,6 +16,11 @@ inputs:
       AoC session cookie - make sure to keep this in a repo secret! See the
       README for instructions on getting this.
     required: true
+  leaderboardId:
+    description: >
+      AoC leaderboard ID. See the README for instructions on getting this.
+    required: false
+    default: ""
   tableMarker:
     description: >
       Unique text marking where the stars board section should go. Should be a
@@ -27,7 +28,7 @@ inputs:
       used elsewhere in the README, and which should appear alone on its own
       line.
     required: false
-    default: '<!--- advent_readme_stars table --->'
+    default: "<!--- advent_readme_stars table --->"
   starSymbol:
     description: Symbol to use in the stars table
     required: false

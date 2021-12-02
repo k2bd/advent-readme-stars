@@ -41,6 +41,7 @@ cmd = "pytest -vv --cov=advent_readme_stars --cov-report term --cov-report xml"
 
 [tool.poe.tasks.test.env]
 INPUT_USERID = "1511815"
+INPUT_LEADERBOARDID = "9995999"
 INPUT_SESSIONCOOKIE = "998877665544332211"
 INPUT_TABLEMARKER = "<!--- advent_readme_stars table --->"
 INPUT_STARSYMBOL = "⭐"
