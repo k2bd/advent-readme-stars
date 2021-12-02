@@ -5,6 +5,16 @@
 
 This [action](https://github.com/marketplace/actions/advent-readme-stars) adds and maintains a stars report in your README based on your [Advent of Code](https://adventofcode.com/) progress.
 
+## Example Table
+
+<!--- advent_readme_stars table example --->
+### 2021 Results
+
+| Day | Part 1 | Part 2 |
+| :---: | :---: | :---: |
+| [Day 1](https://adventofcode.com/2021/day/1) | ⭐ | ⭐ |
+<!--- advent_readme_stars table example --->
+
 ## Quickstart
 
 Add this line somewhere in your `README.md`:
@@ -99,16 +109,6 @@ Should be some kind of Markdown header level.
 *Optional* - default `README.md`
 
 Location of the README file to edit.
-
-## Example Table
-
-<!--- advent_readme_stars table example --->
-### 2021 Results
-
-| Day | Part 1 | Part 2 |
-| :---: | :---: | :---: |
-| [Day 1](https://adventofcode.com/2021/day/1) | ⭐ | ⭐ |
-<!--- advent_readme_stars table example --->
 
 ## Like this project?
 
