@@ -7,6 +7,10 @@ runs:
   using: docker
   image: Dockerfile
 inputs:
+  leaderboardId:
+    description: >
+      AoC leaderboard ID. See the README for instructions on getting this.
+    required: false
   userId:
     description: >
       AoC user ID. See the README for instructions on getting this.

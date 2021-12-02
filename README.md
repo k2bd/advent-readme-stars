@@ -27,7 +27,7 @@ Add this line somewhere in your `README.md`:
 Make a note of your user ID and add your session cookie to your repo as a secret called `AOC_SESSION`.
 To see how to find these values, see those sections in the spec below.
 
-Add this action to your repo as `.github/workflows/readme-stars.yml`, pasting in yout user ID instead of 1234567:
+Add this action to your repo as `.github/workflows/readme-stars.yml`, pasting in your user ID instead of 1234567:
 
 ```yml
 name: Update README ⭐
@@ -44,6 +44,7 @@ jobs:
       - uses: k2bd/advent-readme-stars@v1
         with:
           userId: 1234567
+          leaderboardId: 9876543
           sessionCookie: ${{ secrets.AOC_SESSION }}
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
@@ -59,12 +60,14 @@ If you want to adjust the cron expression, please remember to schedule your jobs
 **Required**
 
 Your Advent of Code user ID.
-To get this, go to your Go to [leaderboard](https://adventofcode.com/2020/leaderboard/private) and press 'View'.
-Your ID is at the end of the URL:
+To get this, go to your Go to [settings](https://adventofcode.com/2021/settings).
+The user ID is displayed in the first option of the question "What would you like to be called?":
 
 ```
-https://adventofcode.com/2021/leaderboard/private/view/(your ID)
+( ) (anonymous user #<your ID>)
+( ) ....
 ```
+
 
 ### `sessionCookie`
 
@@ -74,6 +77,18 @@ Your Advent of Code session cookie.
 To get this, press F12 anywhere on the Advent of Code website to open your browser developer tools.
 Look in your Cookies under the Application or Storage tab, and copy out the session cookie.
 This should be stored as a repository secret, not pasted directly into the action or any other publicly viewable place.
+
+### `leaderboardId`
+
+*Optional* - default `userId` value
+
+Your Advent of Code leaderboard ID.
+To get this, go to your Go to [leaderboard](https://adventofcode.com/2020/leaderboard/private) and press 'View'.
+The leaderboard ID is at the end of the URL:
+
+```
+https://adventofcode.com/2021/leaderboard/private/view/(leaderboard ID)
+```
 
 ### `tableMarker`
 

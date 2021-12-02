@@ -5,6 +5,9 @@ from advent_readme_stars.advent import most_recent_advent_year
 #: Advent of Code user ID
 USER_ID = os.environ.get("INPUT_USERID", "")
 
+#: Advent of Code private leaderboard ID
+LEADERBOARD_ID = os.environ.get("INPUT_LEADERBOARDID", USER_ID)
+
 #: Advent of Code session cookie
 SESSION_COOKIE = os.environ.get("INPUT_SESSIONCOOKIE", "")
 
@@ -27,4 +30,4 @@ README_LOCATION = os.environ.get("INPUT_READMELOCATION", "")
 ADVENT_URL = os.environ.get("ADVENT_URL", "https://adventofcode.com")
 
 #: Stars info endpoint
-STARS_ENDPOINT = f"{ADVENT_URL}/{YEAR}/leaderboard/private/view/{USER_ID}.json"
+STARS_ENDPOINT = f"{ADVENT_URL}/{YEAR}/leaderboard/private/view/{LEADERBOARD_ID}.json"
