@@ -48,7 +48,6 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Update README stars
-          file_pattern: README.md
 ```
 
 If you want to adjust the cron expression, please remember to schedule your jobs such that you respect the Advent of Code request of running automated requests at a rate of no more than 1 per 15 minutes.
