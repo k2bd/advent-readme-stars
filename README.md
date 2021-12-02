@@ -44,6 +44,7 @@ jobs:
       - uses: k2bd/advent-readme-stars@v1
         with:
           userId: 1234567
+          leaderboardId: 9876543
           sessionCookie: ${{ secrets.AOC_SESSION }}
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
@@ -54,17 +55,33 @@ If you want to adjust the cron expression, please remember to schedule your jobs
 
 ## Action Spec
 
+### `leaderboardId`
+
+**Optional**
+
+Your Advent of Code leaderboard ID.
+To get this, go to your Go to [leaderboard](https://adventofcode.com/2020/leaderboard/private) and press 'View'.
+The leaderboard ID is at the end of the URL:
+
+```
+https://adventofcode.com/2021/leaderboard/private/view/(leaderboard ID)
+```
+
+If not provided it will be derived from the userId parameter
+
 ### `userId`
 
 **Required**
 
 Your Advent of Code user ID.
-To get this, go to your Go to [leaderboard](https://adventofcode.com/2020/leaderboard/private) and press 'View'.
-Your ID is at the end of the URL:
+To get this, go to your Go to [settings](https://adventofcode.com/2021/settings).
+The user ID is displayed in the first option of the question "What would you like to be called?":
 
 ```
-https://adventofcode.com/2021/leaderboard/private/view/(your ID)
+( ) (anonymous user #<your ID>)
+( ) ....
 ```
+
 
 ### `sessionCookie`
 
