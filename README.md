@@ -84,7 +84,7 @@ This should be stored as a repository secret, not pasted directly into the actio
 *Optional* - default `userId` value
 
 Your Advent of Code leaderboard ID.
-To get this, go to your Go to [leaderboard](https://adventofcode.com/2020/leaderboard/private) and press 'View'.
+To get this, go to your Go to [leaderboard](https://adventofcode.com/2020/leaderboard/private) and press 'View' (or 'Create' if you haven't yet created a private leaderboard).
 The leaderboard ID is at the end of the URL:
 
 ```
