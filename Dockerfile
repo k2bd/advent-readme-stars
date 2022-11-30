@@ -4,12 +4,9 @@ ENV PYTHONFAULTHANDLER=1 \
     PYTHONHASHSEED=random \
     PYTHONUNBUFFERED=1
 
-RUN pip install "poetry==1.1.11"
+COPY src .
+COPY pyproject.toml .
 
-COPY poetry.lock pyproject.toml ./
-RUN poetry install --no-dev
-
-COPY . .
-RUN poetry build && pip install dist/*.whl
+RUN pip install -e .
 
 CMD ["python", "-m", "advent_readme_stars"]
