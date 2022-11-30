@@ -7,11 +7,13 @@ authors = ["Kevin Duff <kevinkelduff@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 requests = "^2.26.0"
+# Pins
+platformdirs = "^2.4.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
 pytest-cov = "^3.0.0"
-black = "^21.11b1"
+black = "^22.3.0"
 isort = "^5.10.1"
 flake8 = "^4.0.1"
 mypy = "^0.910"
