@@ -8,13 +8,10 @@ This [action](https://github.com/marketplace/actions/advent-readme-stars) adds a
 ## Example Table
 
 <!--- advent_readme_stars table example --->
-### 2021 Results
+### 2022 Results
 
 | Day | Part 1 | Part 2 |
 | :---: | :---: | :---: |
-| [Day 1](https://adventofcode.com/2021/day/1) | ⭐ | ⭐ |
-| [Day 2](https://adventofcode.com/2021/day/2) | ⭐ | ⭐ |
-| [Day 3](https://adventofcode.com/2021/day/3) | ⭐ | ⭐ |
 <!--- advent_readme_stars table example --->
 
 ## Quickstart
