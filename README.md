@@ -8,13 +8,13 @@ This [action](https://github.com/marketplace/actions/advent-readme-stars) adds a
 ## Example Table
 
 <!--- advent_readme_stars table example --->
-### 2021 Results
+### 2022 Results
 
 | Day | Part 1 | Part 2 |
 | :---: | :---: | :---: |
-| [Day 1](https://adventofcode.com/2021/day/1) | ⭐ | ⭐ |
-| [Day 2](https://adventofcode.com/2021/day/2) | ⭐ | ⭐ |
-| [Day 3](https://adventofcode.com/2021/day/3) | ⭐ | ⭐ |
+| [Day 1](https://adventofcode.com/2022/day/1) | ⭐ | ⭐ |
+| [Day 2](https://adventofcode.com/2022/day/2) | ⭐ | ⭐ |
+| [Day 3](https://adventofcode.com/2022/day/3) | ⭐ | ⭐ |
 <!--- advent_readme_stars table example --->
 
 ## Quickstart
@@ -61,7 +61,7 @@ If you want to adjust the cron expression, please remember to schedule your jobs
 **Required**
 
 Your Advent of Code user ID.
-To get this, go to your Go to [settings](https://adventofcode.com/2021/settings).
+To get this, go to your Go to [settings](https://adventofcode.com/2022/settings).
 The user ID is displayed in the first option of the question "What would you like to be called?":
 
 ```
@@ -84,11 +84,11 @@ This should be stored as a repository secret, not pasted directly into the actio
 *Optional* - default `userId` value
 
 Your Advent of Code leaderboard ID.
-To get this, go to your Go to [leaderboard](https://adventofcode.com/2020/leaderboard/private) and press 'View' (or 'Create' if you haven't yet created a private leaderboard).
+To get this, go to your Go to [leaderboard](https://adventofcode.com/2022/leaderboard/private) and press 'View' (or 'Create' if you haven't yet created a private leaderboard).
 The leaderboard ID is at the end of the URL:
 
 ```
-https://adventofcode.com/2021/leaderboard/private/view/(leaderboard ID)
+https://adventofcode.com/2022/leaderboard/private/view/(leaderboard ID)
 ```
 
 ### `tableMarker`
