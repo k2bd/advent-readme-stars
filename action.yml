@@ -48,6 +48,14 @@ inputs:
     description: Location of the README file
     required: false
     default: "README.md"
+  solutionLocations:
+    description: Location of your solution for each day
+    required: false
+    default: ""
+  solutionPadding:
+    description: If you have enabled solution locations should each day be padded?
+    required: false
+    default: "true"
 branding:
   icon: "star"
   color: "purple"

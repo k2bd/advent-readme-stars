@@ -126,6 +126,18 @@ Should be some kind of Markdown header level.
 
 Location of the README file to edit.
 
+### `solutionLocations`
+
+*Optional* - default is none
+
+Location of the solution files relative to the readmeLocation, use `{}` to indicate where the day should be inserted.
+
+### `solutionPadding`
+
+*Optional* - default `true`
+
+Whether the day for each solution should be padded. If true it will convert day 1 to `01`.
+
 ## Like this project?
 
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png)](https://www.buymeacoffee.com/k2bd)
