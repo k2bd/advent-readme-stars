@@ -104,7 +104,7 @@ def get_solution(day: int) -> str:
     Gets the solution text for a specific day
     """
     day_text = str(day).rjust(2 if SOLUTION_PADDING.lower() == "true" else 1, "0")
-    solution_rel_path = SOLUTION_LOCATIONS.format(day_text)
+    solution_rel_path = SOLUTION_LOCATIONS.replace("{}", str(day_text))
     readme_dir = README_LOCATION.removesuffix(os.path.basename(README_LOCATION))
     solution_location = os.path.join(readme_dir, solution_rel_path)
     if os.path.exists(solution_location):
