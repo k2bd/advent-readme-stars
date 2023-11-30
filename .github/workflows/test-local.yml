@@ -5,15 +5,17 @@ on:
 jobs:
   update-readme:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./
         with:
           userId: 1511815
           sessionCookie: ${{ secrets.AOC_SESSION }}
           headerPrefix: "###"
           tableMarker: "<!--- advent_readme_stars table example --->"
-          year: 2022
-      - uses: stefanzweifel/git-auto-commit-action@v4
+          year: 2023
+      - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Update README stars
