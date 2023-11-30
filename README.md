@@ -41,7 +41,7 @@ jobs:
   update-readme:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: k2bd/advent-readme-stars@v1
         with:
           userId: 1234567
