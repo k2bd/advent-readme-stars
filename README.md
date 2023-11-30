@@ -40,6 +40,8 @@ on:
 jobs:
   update-readme:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v3
       - uses: k2bd/advent-readme-stars@v1
@@ -47,7 +49,7 @@ jobs:
           userId: 1234567
           leaderboardId: 9876543
           sessionCookie: ${{ secrets.AOC_SESSION }}
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@v5 # use v5
         with:
           commit_message: Update README stars
 ```
