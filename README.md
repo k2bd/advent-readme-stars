@@ -26,6 +26,8 @@ This [action](https://github.com/marketplace/actions/advent-readme-stars) adds a
 
 ## Quickstart
 
+Ensure you have created your [private leaderboard](https://adventofcode.com/2023/leaderboard/private)
+
 Add this line somewhere in your `README.md`:
 
 ```markdown
