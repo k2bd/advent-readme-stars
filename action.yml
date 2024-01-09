@@ -48,6 +48,10 @@ inputs:
     description: Location of the README file
     required: false
     default: "README.md"
+  solutionLocations:
+    description: Location of your solution for each day
+    required: false
+    default: ""
 branding:
   icon: "star"
   color: "purple"
