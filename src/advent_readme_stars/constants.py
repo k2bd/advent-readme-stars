@@ -33,5 +33,3 @@ ADVENT_URL = os.environ.get("ADVENT_URL", "https://adventofcode.com")
 STARS_ENDPOINT = f"{ADVENT_URL}/{YEAR}/leaderboard/private/view/{LEADERBOARD_ID}.json"
 
 SOLUTION_LOCATIONS = os.environ.get("INPUT_SOLUTIONLOCATIONS", "")
-
-SOLUTION_PADDING = os.environ.get("INPUT_SOLUTIONPADDING", "")

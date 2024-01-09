@@ -130,13 +130,13 @@ Location of the README file to edit.
 
 *Optional* - default is none
 
-Location of the solution files relative to the readmeLocation, use `{}` to indicate where the day should be inserted.
+Location of the solution files relative to the `readmeLocation`,
+the following placeholders can be used:
 
-### `solutionPadding`
-
-*Optional* - default `true`
-
-Whether the day for each solution should be padded. If true it will convert day 1 to `01`.
+- `{d}` The day of the solution (e.g. 3, 5 and 10)
+- `{dd}` The padded day of the solution (e.g. 03, 05 and 10)
+- `{yyyy}` The year of the solution (e.g. 2021 or 2023)
+- `{yy}` The truncated year of the solution (e.g. 21 or 23)
 
 ## Like this project?
 

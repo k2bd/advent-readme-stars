@@ -6,7 +6,6 @@ from advent_readme_stars.constants import (
     HEADER_PREFIX,
     README_LOCATION,
     SOLUTION_LOCATIONS,
-    SOLUTION_PADDING,
     STAR_SYMBOL,
     TABLE_MARKER,
     YEAR,
@@ -93,18 +92,21 @@ def insert_solutions_table(lines: List[str]) -> List[str]:
         day_text = f"[Day {star_info.day}]({day_url})"
         part_1_text = STAR_SYMBOL if star_info.part_1 else " "
         part_2_text = STAR_SYMBOL if star_info.part_2 else " "
-        solution = get_solution(star_info.day)
+        solution = get_solution(YEAR, star_info.day)
         to_insert.append(f"| {day_text} | {solution} | {part_1_text} | {part_2_text} |")
 
     return lines[:table_location] + to_insert + lines[table_location:]
 
 
-def get_solution(day: int) -> str:
+def get_solution(year: int, day: int) -> str:
     """
     Gets the solution text for a specific day
     """
-    day_text = str(day).rjust(2 if SOLUTION_PADDING.lower() == "true" else 1, "0")
-    solution_rel_path = SOLUTION_LOCATIONS.replace("{}", str(day_text))
+    solution_rel_path = (SOLUTION_LOCATIONS
+                         .replace("{d}", str(day))
+                         .replace("{dd}", str(day).rjust(2, "0"))
+                         .replace("{yyyy}", str(year))
+                         .replace("{yy}", str(year)[-2:]))
     readme_dir = README_LOCATION.removesuffix(os.path.basename(README_LOCATION))
     solution_location = os.path.join(readme_dir, solution_rel_path)
     if os.path.exists(solution_location):
