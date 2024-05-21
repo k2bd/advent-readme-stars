@@ -6,7 +6,7 @@ authors = ["Kevin Duff <kevinkelduff@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-requests = "^2.26.0"
+requests = "^2.32.0"
 # Pins
 platformdirs = "^2.4.0"
 
