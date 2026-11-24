@@ -1,204 +1,217 @@
-from typing import List
+from typing import Dict, List, Optional
 import datetime
-import time
+import html
 import json
-import requests
 import os
+import time
+
+import requests
+
+from advent_readme_stars.advent import most_recent_advent_year
 from advent_readme_stars.constants import README_LOCATION, SESSION_COOKIE, YEAR, ADVENT_URL, TABLE_MARKER
-# Removed import for LEADERBOARD_ID since we are now defining multiple IDs
 
-# --- CONFIGURATION FOR MULTIPLE LEADERBOARDS ---
-# IMPORTANT: Replace these placeholder IDs with your actual AoC private leaderboard IDs
 LEADERBOARDS = [
-    {"id": 1739374, "name": "Team Default (Pakistan)"}, # Assuming this is your original ID
-    {"id": 5206594, "name": "Team 2025"}, # Replace with your second ID
+    {"id": 1739374, "name": "Team Default (Pakistan)"},
+    {"id": 5206594, "name": "Team 2025"},
 ]
-# YEAR="2023,2022,2021"
 
-def timeconvert(membertime: int, day: int, year: str) -> str:
-    """
-    Calculates the time difference between star completion and the puzzle release time.
-    AoC puzzles release at 00:00 EST, which is 05:00 UTC (or 06:00 UTC depending on DST).
-    This function uses 05:00 UTC as the base puzzle start time.
-    """
-    # Puzzle start time (Dec 'day', 5:00:00 UTC)
-    d = datetime.datetime(int(year), 12, int(day), 5, 0, 0, 0, datetime.timezone.utc)
-    unix_start = int(time.mktime(d.timetuple()))
+DATA_DIR = os.environ.get("INPUT_DATADIR", "data")
 
-    starttime = datetime.datetime.fromtimestamp(unix_start, datetime.timezone.utc)
-    completeTime = datetime.datetime.fromtimestamp(membertime, datetime.timezone.utc)
+#: Number of rows rendered in the <noscript> fallback
+FALLBACK_ROWS = 10
 
-    # Return time difference formatted as string (e.g., '0:01:30')
-    return str(completeTime - starttime)
 
-def get_progress(year: str, leaderboard_id: int) -> dict:
-    """Fetches and processes leaderboard data for a specific year and leaderboard ID."""
-    STARS_ENDPOINT = f"{ADVENT_URL}/{year}/leaderboard/private/view/{leaderboard_id}.json"
-    print(f"Fetching data for Year {year}, Leaderboard ID {leaderboard_id}...")
+def years() -> List[str]:
+    return [y.strip() for y in str(YEAR).split(",") if y.strip()]
 
+
+def cache_path(year: str, board_id: int) -> str:
+    return os.path.join(DATA_DIR, f"{year}-{board_id}.json")
+
+
+def release_ts(year: str, day: int) -> int:
+    """AoC puzzles unlock at midnight EST (05:00 UTC); EST has no DST in December."""
+    return int(datetime.datetime(int(year), 12, day, 5, tzinfo=datetime.timezone.utc).timestamp())
+
+
+def is_final(year: str, cached: dict) -> bool:
+    """A past year's cache is final once it was fetched after that year's event ended."""
+    if year == str(most_recent_advent_year()):
+        return False
+    fetched_at = cached.get("_fetched_at", 0)
+    year_end = datetime.datetime(int(year) + 1, 1, 1, tzinfo=datetime.timezone.utc).timestamp()
+    return fetched_at >= year_end
+
+
+def load_leaderboard(year: str, board_id: int) -> Optional[dict]:
+    path = cache_path(year, board_id)
+    cached = None
+    if os.path.exists(path):
+        with open(path, "r", encoding="utf-8") as f:
+            cached = json.load(f)
+        if is_final(year, cached):
+            return cached
+
+    if not SESSION_COOKIE:
+        return cached
+
+    url = f"{ADVENT_URL}/{year}/leaderboard/private/view/{board_id}.json"
+    print(f"Fetching {url}")
     try:
-        res = requests.get(STARS_ENDPOINT, cookies={"session": SESSION_COOKIE}, timeout=10)
+        res = requests.get(url, cookies={"session": SESSION_COOKIE}, timeout=10)
         res.raise_for_status()
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching data for {year} (ID: {leaderboard_id}): {e}")
-        return {}
+        data = res.json()
+    except (requests.exceptions.RequestException, ValueError) as e:
+        print(f"Error fetching {year} (board {board_id}): {e}")
+        return cached
 
-    leaderboard_info = res.json()
-    members = {}
+    data["_fetched_at"] = int(time.time())
+    os.makedirs(DATA_DIR, exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, separators=(",", ":"))
+    return data
 
-    # Sort members by local_score in descending order
-    sorted_members = sorted(leaderboard_info["members"].items(), 
-                            key=lambda item: item[1]['local_score'], reverse=True)
 
-    for member_id, detail in sorted_members:
-        name = detail.get("name", f"Anon User {member_id}")
-        score = detail["local_score"]
-        stars = detail["completion_day_level"]
+NAME_LINKS = {
+    "support palestine": "https://www.linkedin.com/in/muhammad-saad-siddique/",
+}
 
-        if score > 0:
-            # Start of the HTML row
-            ft = f"<tr><th> {name} </th><th> {score} </th>"
 
-            for d in range(1, 26):
-                parts = stars.get(str(d), {})
-                completed = parts.keys()
-                
-                # Column for Day 'd'
-                ft += "<td>"
-                
-                # Part 1 (Silver Star)
-                # If part 1 exists, show star and time; otherwise, 6 spaces for alignment
-                ft += (f"⭐{timeconvert(parts['1']['get_star_ts'], d, year)}" if "1" in completed else "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")
-                
-                # Part 2 (Gold Star)
-                # If part 2 exists, show star and time; otherwise, 6 spaces for alignment
-                ft += (f"⭐{timeconvert(parts['2']['get_star_ts'], d, year)}" if "2" in completed else "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")
-                
-                ft += "</td>"
-            
-            ft += "</tr>"
-            
-            # Store the formatted row for later insertion
-            members[member_id] = [name, score, ft]
+def linked_name(name: str) -> str:
+    safe = html.escape(name)
+    url = NAME_LINKS.get(name.strip().lower())
+    if not url:
+        return safe
+    return f'<a class="person-link" href="{html.escape(url)}" target="_blank" rel="noreferrer">{safe}</a>'
 
-    return members
 
-def insert_table(lines: List[str]) -> List[str]:
-    """
-    Inserts the HTML table(s) into the list of lines at the TABLE_MARKER.
-    Returns a flat list of lines.
-    """
-    table_location = None
-    for i, line in enumerate(lines):
-        if line.strip() == TABLE_MARKER:
-            table_location = i
-            break
-    else:
-        return lines
+def member_name(member: dict) -> str:
+    return member.get("name") or f"Anonymous #{member['id']}"
 
-    to_insert = [TABLE_MARKER] # Keep the opening marker
 
-    for leaderboard in LEADERBOARDS:
-        leaderboard_id = leaderboard["id"]
-        leaderboard_name = leaderboard["name"]
-        
-        for y in YEAR.split(','):
-            # Header for Year and Leaderboard
-            to_insert.append(f"<div class='section__header'>        <h2 id='overall-scores'>{leaderboard_name} - {y} Results</h2></div>")
-            
-            # Start of the table structure
-            firstLine = "<div class='divTableContainer'><div class='table__wrap'><table>"
-            firstLine += "<thead><tr><th> Name </th><th> Score </th>"
-            
-            # Day Headers
-            for day in range(1, 26):
-                day_url = f"{ADVENT_URL}/{y}/day/{day}"
-                # Each day column will contain the two parts
-                firstLine += f"<th><a href=\"{day_url}\" target='_blank' class='day-link'>Day {day}</a></th>"
+def member_totals(member: dict, year: str) -> Dict[str, int]:
+    stars = 0
+    total = 0
+    for day, parts in member.get("completion_day_level", {}).items():
+        for part in parts.values():
+            stars += 1
+            total += max(0, part["get_star_ts"] - release_ts(year, int(day)))
+    return {"stars": stars, "seconds": total}
 
-            firstLine += "</tr></thead><tbody>"
-            to_insert.append(firstLine)
 
-            # Get and insert member data
-            member_data = get_progress(y, leaderboard_id)
-            data_sorted = {key: val for key, val in sorted(member_data.items(), 
-                                                           key=lambda ele: ele[1][1], 
-                                                           reverse=True)}
-
-            for key, val in data_sorted.items():
-                to_insert.append(val[2]) # val[2] is the pre-formatted <tr>...</tr> string
-
-            # End of table structure
-            to_insert.append("</tbody></table></div></div>")
-
-    # The list now contains the original content up to the marker, the new tables, and the rest of the original content
-    return lines[:table_location + 1] + to_insert[1:] + lines[table_location + 1:]
-
-def remove_existing_table(lines: List[str]) -> List[str]:
-    """
-    Removes existing table content between two TABLE_MARKERs.
-    """
-    start = None
-    end = None
-    
-    # Find the start and end markers
-    for i, line in enumerate(lines):
-        if start is None and line.strip() == TABLE_MARKER:
-            start = i
+def find_duplicates(boards: Dict[int, dict]) -> List[dict]:
+    """Members with at least one star on more than one board, matched by AoC member id."""
+    seen: Dict[str, dict] = {}
+    for board in LEADERBOARDS:
+        data = boards.get(board["id"])
+        if not data:
             continue
-        if start is not None and line.strip() == TABLE_MARKER:
-            end = i
-            break
-            
-    # If both markers are found, remove the content between them
-    if start is not None and end is not None:
-        # Keep the two markers, remove everything in between
-        return lines[:start] + [lines[start]] + [lines[end]] + lines[end+1:]
-        
+        for member_id, member in data["members"].items():
+            if not member.get("completion_day_level"):
+                continue
+            entry = seen.setdefault(member_id, {"id": int(member_id), "name": member_name(member), "boards": []})
+            entry["boards"].append({"id": board["id"], "name": board["name"]})
+    dupes = [m for m in seen.values() if len(m["boards"]) > 1]
+    return sorted(dupes, key=lambda m: m["name"].lower())
+
+
+def format_duration(seconds: int) -> str:
+    days, rem = divmod(seconds, 86400)
+    hours, rem = divmod(rem, 3600)
+    minutes, secs = divmod(rem, 60)
+    clock = f"{hours:02}:{minutes:02}:{secs:02}"
+    return f"{days}d {clock}" if days else clock
+
+
+def fallback_table(year: str, boards: Dict[int, dict]) -> List[str]:
+    merged: Dict[str, dict] = {}
+    for data in boards.values():
+        if data:
+            for member_id, member in data["members"].items():
+                merged.setdefault(member_id, member)
+
+    rows = []
+    for member in merged.values():
+        totals = member_totals(member, year)
+        if totals["stars"]:
+            rows.append((totals["seconds"], member_name(member), totals["stars"]))
+    rows.sort()
+
+    lines = [
+        "<noscript>",
+        f"<div class='section__header'><h2>{year} top {FALLBACK_ROWS} by total time</h2></div>",
+        "<div class='table__wrap'><table><thead><tr><th>Rank</th><th>Name</th><th>Stars</th><th>Total time</th></tr></thead><tbody>",
+    ]
+    for rank, (seconds, name, stars) in enumerate(rows[:FALLBACK_ROWS], start=1):
+        lines.append(f"<tr><td>{rank}</td><td>{linked_name(name)}</td><td>{stars}</td><td>{format_duration(seconds)}</td></tr>")
+    lines.append("</tbody></table></div>")
+    lines.append("</noscript>")
     return lines
 
-def update_readme(readme: List[str]) -> List[str]:
-    """
-    Take the contents of a readme file and update them
-    """
-    # 1. Remove any old table content (keeping the markers)
-    reduced = remove_existing_table(readme)
-    
-    # 2. Insert the new table content
-    new_readme = insert_table(reduced)
-    
-    return new_readme
+
+def write_json(name: str, payload) -> None:
+    os.makedirs(DATA_DIR, exist_ok=True)
+    with open(os.path.join(DATA_DIR, name), "w", encoding="utf-8") as f:
+        json.dump(payload, f, indent=2)
+
+
+def generate_data() -> List[str]:
+    """Fetch/cache every board for every year, write manifest and duplicates, return the fallback HTML."""
+    manifest = {
+        "generated_at": int(time.time()),
+        "boards": [{"id": b["id"], "name": b["name"]} for b in LEADERBOARDS],
+        "years": [],
+    }
+    duplicates: Dict[str, List[dict]] = {}
+    fallback: List[str] = []
+
+    for year in sorted(years(), reverse=True):
+        boards = {b["id"]: load_leaderboard(year, b["id"]) for b in LEADERBOARDS}
+        available = [board_id for board_id, data in boards.items() if data]
+        if not available:
+            print(f"No data for {year}, skipping")
+            continue
+
+        num_days = max(boards[board_id].get("num_days", 25) for board_id in available)
+        manifest["years"].append({"year": year, "num_days": num_days, "boards": available})
+
+        dupes = find_duplicates(boards)
+        duplicates[year] = dupes
+        if dupes:
+            print(f"\n{year}: {len(dupes)} member(s) on more than one leaderboard")
+            for d in dupes:
+                print(f"  {d['name']} (id {d['id']}): {', '.join(b['name'] for b in d['boards'])}")
+
+        if not fallback:
+            fallback = fallback_table(year, boards)
+
+    write_json("manifest.json", manifest)
+    write_json("duplicates.json", duplicates)
+    return fallback
+
+
+def update_readme(readme: List[str], inserted: List[str]) -> List[str]:
+    """Replace everything between the first two TABLE_MARKER lines with `inserted`."""
+    markers = [i for i, line in enumerate(readme) if line.strip() == TABLE_MARKER]
+    if not markers:
+        return readme
+    start = markers[0]
+    end = markers[1] if len(markers) > 1 else start
+    return readme[: start + 1] + inserted + [TABLE_MARKER] + readme[end + 1:]
+
 
 if __name__ == "__main__":
-    # The constants are imported from advent_readme_stars.constants (must be defined in your environment)
-    # The SESSION_COOKIE must be set in your environment or constants file for this to work.
-    
-    # Check if we are ready to run
     if not SESSION_COOKIE:
-        print("Error: SESSION_COOKIE is not set. Cannot fetch private leaderboard data.")
-        exit(1)
+        print("SESSION_COOKIE is not set; using cached leaderboard data only.")
 
-    # Read the existing file
+    fallback = generate_data()
+
     try:
         with open(README_LOCATION, "r", encoding="utf-8") as f:
             lines = f.read().splitlines()
     except FileNotFoundError:
-        print(f"Error: README file not found at {README_LOCATION}. Creating a minimal one.")
-        lines = ["# Advent of Code Leaderboard", TABLE_MARKER, TABLE_MARKER]
-
-    # Generate the updated content
-    edited = update_readme(lines)
-
-    # Write the updated content back to the file
-    try:
+        print(f"{README_LOCATION} not found, skipping HTML fallback update.")
+    else:
         with open(README_LOCATION, "w", encoding="utf-8") as f:
-            for line in edited:
-                # Ensure each element is written as a line
-                if isinstance(line, str):
-                    f.write(line + "\n")
-                else:
-                    # Should not happen with the refactored insert_table, but for safety
-                    f.write(str(line) + "\n")
-        print(f"\nSuccessfully updated leaderboard tables in {README_LOCATION}.")
-    except Exception as e:
-        print(f"Error writing to file {README_LOCATION}: {e}")
+            f.write("\n".join(update_readme(lines, fallback)) + "\n")
+        print(f"\nUpdated {README_LOCATION}.")

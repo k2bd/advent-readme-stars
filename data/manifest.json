@@ -1,0 +1,50 @@
+{
+  "generated_at": 1795545041,
+  "boards": [
+    {
+      "id": 1739374,
+      "name": "Team Default (Pakistan)"
+    },
+    {
+      "id": 5206594,
+      "name": "Team 2025"
+    }
+  ],
+  "years": [
+    {
+      "year": "2025",
+      "num_days": 12,
+      "boards": [
+        1739374
+      ]
+    },
+    {
+      "year": "2024",
+      "num_days": 25,
+      "boards": [
+        1739374
+      ]
+    },
+    {
+      "year": "2023",
+      "num_days": 25,
+      "boards": [
+        1739374
+      ]
+    },
+    {
+      "year": "2022",
+      "num_days": 25,
+      "boards": [
+        1739374
+      ]
+    },
+    {
+      "year": "2021",
+      "num_days": 25,
+      "boards": [
+        1739374
+      ]
+    }
+  ]
+}
